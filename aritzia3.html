@@ -6,6 +6,7 @@
     <title>Open Iframe on Click</title>
     <style>
         .ot-form-wrapper {
+            position: relative;
             max-width: 750px;
             height: 800px;
             border: 1px solid #c0c2c7;
@@ -31,6 +32,22 @@
         .open-button:hover {
             background-color: #45a049;
         }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50%;
+        }
+        .close-button:hover {
+            background-color: #cc0000;
+        }
     </style>
 </head>
 <body>
@@ -38,12 +55,17 @@
 <button class="open-button" onclick="openIframe()">Open Form</button>
 
 <div class="ot-form-wrapper" id="ot-form-wrapper">
+    <button class="close-button" onclick="closeIframe()">X</button>
     <iframe src="https://privacyportal.onetrust.com/webform/73cb21c4-9737-45b0-ba87-528432c7bbca/f210ef93-bff2-4af8-a2bd-bd871a2b0267"></iframe>
 </div>
 
 <script>
     function openIframe() {
         document.getElementById('ot-form-wrapper').style.display = 'block';
+    }
+
+    function closeIframe() {
+        document.getElementById('ot-form-wrapper').style.display = 'none';
     }
 
     window.addEventListener("message", function(event) {
