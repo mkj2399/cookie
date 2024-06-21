@@ -5,11 +5,56 @@
 --><head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# aritzia: http://ogp.me/ns/fb/aritzia#"><meta charset=utf-8>
 	
 	
-	<!-- OneTrust Cookies Consent Notice start for aritzia.com -->
-	<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test" ></script>
-	<script type="text/javascript">
-	function OptanonWrapper() { }
-	</script>
+<!-- OneTrust Cookies Consent Notice start for aritzia.com -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the button element
+    var openIframeBtn = document.querySelector('.open-iframe-btn');
+    
+    // Add a click event listener to the button
+    openIframeBtn.addEventListener('click', function() {
+      // Function to open a new iframe
+      openNewIframe('https://example.com/details');
+      
+      // Function to close the preference center
+      closePreferenceCenter();
+    });
+  });
+  
+  // Function to open a new iframe
+  function openNewIframe(url) {
+    // Create a new iframe element
+    var iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.style.position = 'fixed';
+    iframe.style.top = '0';
+    iframe.style.left = '0';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
+    iframe.style.zIndex = '1000'; // Ensure it's above other content
+    
+    // Append the iframe to the body
+    document.body.appendChild(iframe);
+  }
+  
+  // Function to close the preference center
+  function closePreferenceCenter() {
+    // Find the preference center element
+    var preferenceCenter = document.querySelector('.preference-center');
+    
+    // Hide the preference center
+    if (preferenceCenter) {
+      preferenceCenter.style.display = 'none';
+    }
+  }
+  
+</script>
 
 <link rel=alternate hreflang=en-CA href=https://www.aritzia.com/en/shop-by/effortless-pant-shop-by>
 <link rel=alternate hreflang=fr-CA href=https://www.aritzia.com/fr/shop-by/effortless-pant-shop-by>
