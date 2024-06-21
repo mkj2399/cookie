@@ -65,6 +65,7 @@
         mutations.forEach(function(mutation) {
           if (mutation.addedNodes.length) {
             mutation.addedNodes.forEach(function(node) {
+              // Check for the OneTrust preference center and dark filter
               if (node.id === 'onetrust-pc-sdk' || node.classList.contains('onetrust-pc-dark-filter')) {
                 // Attach the event listener to intercept the link click inside the preference center
                 setupLinkInterception();
@@ -81,11 +82,17 @@
       function setupLinkInterception() {
         var link = document.querySelector('#lulu-ot-opt-out-link');
         if (link) {
-          link.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default link behavior
-            showIframe('/dns-form'); // Show the iframe with the form
-          });
+          // Remove any existing listeners to prevent duplicate handling
+          link.removeEventListener('click', interceptLinkClick);
+          // Add a new listener for the click event
+          link.addEventListener('click', interceptLinkClick);
         }
+      }
+
+      // Function to handle the link click and show the iframe
+      function interceptLinkClick(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        showIframe('/dns-form'); // Show the iframe with the form
       }
     });
 
