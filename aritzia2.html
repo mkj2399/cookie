@@ -8,32 +8,18 @@
   <!-- OneTrust Cookies Consent Notice start for aritzia.com -->
   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test"></script>
   <script type="text/javascript">
-    function OptanonWrapper() { 
+    function OptanonWrapper() {
       if (OneTrust.IsAlertBoxClosed() === false) {
         var banner = document.getElementById("onetrust-banner-sdk");
         var prefpc = document.getElementById("onetrust-pc-sdk");
         var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[0];
         banner.style = "display: none;";
-        prefpc.style = "display: block !important;animation: example1 3s linear";
+        prefpc.style = "display: block !important; animation: example1 3s linear";
         filter.style = "display: block !important;";
       }
     }
   </script>
-  <script>
-    // Listen for messages from the iframe
-    window.addEventListener('message', function(event) {
-      // Ensure the message is from the trusted OneTrust domain
-      if (event.origin === 'https://privacyportal.onetrust.com') {
-        console.log('Message received from OneTrust iframe:', event.data);
-        // Display an alert when the form submission message is received
-        if (event.data === 'formSubmitted') {
-          alert('Form has been submitted!');
-        }
-      } else {
-        console.log('Received message from untrusted origin:', event.origin);
-      }
-    });
-  </script>
+
   <style>
     @keyframes example1 {
       0% { transform: translateY(-200%); }
@@ -58,6 +44,7 @@
       border: none;
     }
   </style>
+  
   <!-- OneTrust Cookies Consent Notice end for aritzia.com -->
 </head>
 <body>
@@ -65,19 +52,38 @@
 
   <!-- Iframe wrapper to display the form on top of the preference center -->
   <div class="iframe-wrapper" id="iframeWrapper">
-    <iframe id="dsar-form-iframe" src="https://privacyportal.onetrust.com/webform/73cb21c4-9737-45b0-ba87-528432c7bbca/f210ef93-bff2-4af8-a2bd-bd871a2b0267"></iframe>
+    <iframe id="dsar-form-iframe" src="about:blank"></iframe>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // This opens the preference center directly when the page loads
       Optanon.TriggerConsentUI();
+
+      // Intercept the link click inside the preference center
+      document.body.addEventListener('click', function(event) {
+        // Check if the clicked element is the specific link we want to intercept
+        var target = event.target;
+        if (target.id === 'lulu-ot-opt-out-link' || target.closest('#lulu-ot-opt-out-link')) {
+          event.preventDefault(); // Prevent the default link behavior
+          showIframe('/dns-form'); // Show the iframe with the form
+        }
+      });
     });
 
     // Function to show the iframe on top of the preference center
-    function showIframe() {
+    function showIframe(url) {
       var iframeWrapper = document.getElementById('iframeWrapper');
+      var iframe = document.getElementById('dsar-form-iframe');
+      iframe.src = url; // Set the URL of the iframe
       iframeWrapper.style.display = 'flex';
+    }
+
+    // Example to close the iframe if needed
+    function closeIframe() {
+      var iframeWrapper = document.getElementById('iframeWrapper');
+      iframeWrapper.style.display = 'none';
+      document.getElementById('dsar-form-iframe').src = 'about:blank'; // Clear the iframe content
     }
   </script>
 </body>
