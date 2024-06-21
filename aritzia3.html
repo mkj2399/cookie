@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Iframe on Click</title>
+    <style>
+        .ot-form-wrapper {
+            max-width: 750px;
+            height: 800px;
+            border: 1px solid #c0c2c7;
+            margin: auto;
+            display: none; /* Initially hidden */
+        }
+        .ot-form-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .open-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+        .open-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<button class="open-button" onclick="openIframe()">Open Form</button>
+
+<div class="ot-form-wrapper" id="ot-form-wrapper">
+    <iframe src="https://privacyportal.onetrust.com/webform/73cb21c4-9737-45b0-ba87-528432c7bbca/f210ef93-bff2-4af8-a2bd-bd871a2b0267"></iframe>
+</div>
+
+<script>
+    function openIframe() {
+        document.getElementById('ot-form-wrapper').style.display = 'block';
+    }
+
+    window.addEventListener("message", function(event) {
+        if (event.origin != 'https://privacyportal.onetrust.com') {
+            // something from an unknown domain, let's ignore it 
+            return;
+        }
+        alert("received msg from parent: " + event.data);
+    });
+</script>
+
+</body>
+</html>
