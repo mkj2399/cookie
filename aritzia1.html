@@ -19,6 +19,30 @@
 }
 }
 </script>
+<script>
+  // Listen for messages from the iframe
+  window.addEventListener('message', function(event) {
+    if (event.origin !== 'https://privacyportal.onetrust.com') {
+      return; // Ignore messages from unknown origins
+    }
+    if (event.data === 'formSubmitted') {
+      // Open the OneTrust preference center
+      if (typeof Optanon !== 'undefined' && typeof Optanon.TriggerConsentUI === 'function') {
+        Optanon.TriggerConsentUI();
+      }
+    }
+    if (event.data === 'closePreferenceCenter') {
+      // Close the OneTrust preference center
+      if (typeof Optanon !== 'undefined' && typeof Optanon.CloseConsentUI === 'function') {
+        Optanon.CloseConsentUI();
+      }
+      // Optionally hide the iframe again
+      var iframe = document.getElementById('dsar-form-iframe');
+      iframe.style.display = 'none';
+    }
+  });
+</script>
+
 <style>
 @keyframes example1 {
  0%   { 
