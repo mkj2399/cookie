@@ -55,6 +55,25 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
 </script>
+<script>
+    // This function will be called when the button is clicked
+    function openIframe() {
+        alert("Button was clicked! Implement your functionality here.");
+        // Add your custom logic here
+        // For example, you could show/hide an iframe or load specific content into it
+    }
+
+    // Wait for the DOM to fully load before adding the event listener
+    document.addEventListener("DOMContentLoaded", function() {
+        // Find the button by its class name and add a click event listener
+        var button = document.querySelector(".open-iframe-btn");
+        if (button) {
+            button.addEventListener("click", openIframe);
+        } else {
+            console.error("Button with class 'open-iframe-btn' not found!");
+        }
+    });
+</script>
 
 <!-- OneTrust Cookies Consent Notice end for aritzia.com -->
 
@@ -65,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <button id="ot-sdk-btn" class="ot-sdk-show-settings">
         Cookie Settings
       </button>
+      <button class="open-iframe-btn">here</button>
 
 
 </body>
