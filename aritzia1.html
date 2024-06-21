@@ -22,19 +22,12 @@
 <script>
   // Listen for messages from the iframe
   window.addEventListener('message', function(event) {
-    // Ensure the message is from a trusted source
+    // Ensure the message is from the trusted OneTrust domain
     if (event.origin === 'https://privacyportal.onetrust.com') {
       console.log('Message received from OneTrust iframe:', event.data);
-      // Check if the message indicates that the form has been submitted
+      // Display an alert when the form submission message is received
       if (event.data === 'formSubmitted') {
         alert('Form has been submitted!');
-
-        // Optionally close the OneTrust preference center
-        if (typeof Optanon !== 'undefined' && typeof Optanon.CloseConsentUI === 'function') {
-          Optanon.CloseConsentUI();
-        } else {
-          console.error('Optanon API is not available.');
-        }
       }
     } else {
       console.log('Received message from untrusted origin:', event.origin);
