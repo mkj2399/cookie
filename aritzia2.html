@@ -60,15 +60,33 @@
       // This opens the preference center directly when the page loads
       Optanon.TriggerConsentUI();
 
-      // Intercept the link click inside the preference center
-      document.body.addEventListener('click', function(event) {
-        // Check if the clicked element is the specific link we want to intercept
-        var target = event.target;
-        if (target.id === 'lulu-ot-opt-out-link' || target.closest('#lulu-ot-opt-out-link')) {
-          event.preventDefault(); // Prevent the default link behavior
-          showIframe('/dns-form'); // Show the iframe with the form
-        }
+      // Monitor the DOM for changes to detect when the preference center is loaded
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.addedNodes.length) {
+            mutation.addedNodes.forEach(function(node) {
+              if (node.id === 'onetrust-pc-sdk' || node.classList.contains('onetrust-pc-dark-filter')) {
+                // Attach the event listener to intercept the link click inside the preference center
+                setupLinkInterception();
+              }
+            });
+          }
+        });
       });
+
+      // Start observing the body for added child nodes
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Function to set up the link interception
+      function setupLinkInterception() {
+        var link = document.querySelector('#lulu-ot-opt-out-link');
+        if (link) {
+          link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            showIframe('/dns-form'); // Show the iframe with the form
+          });
+        }
+      }
     });
 
     // Function to show the iframe on top of the preference center
