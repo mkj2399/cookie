@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Preferences</title>
+  
+ <!-- OneTrust Cookies Consent Notice start for aritzia.com -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the button element
+    var openIframeBtn = document.querySelector('.open-iframe-btn');
+    
+    // Add a click event listener to the button
+    openIframeBtn.addEventListener('click', function() {
+      // Function to open a new iframe
+      openNewIframe('https://example.com/details');
+      
+      // Function to close the preference center
+      closePreferenceCenter();
+    });
+  });
+  
+  // Function to open a new iframe
+  function openNewIframe(url) {
+    // Create a new iframe element
+    var iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.style.position = 'fixed';
+    iframe.style.top = '0';
+    iframe.style.left = '0';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
+    iframe.style.zIndex = '1000'; // Ensure it's above other content
+    
+    // Append the iframe to the body
+    document.body.appendChild(iframe);
+  }
+  
+  // Function to close the preference center
+  function closePreferenceCenter() {
+    // Find the preference center element
+    var preferenceCenter = document.querySelector('.preference-center');
+    
+    // Hide the preference center
+    if (preferenceCenter) {
+      preferenceCenter.style.display = 'none';
+    }
+  }
+  
+</script>
+<script>
+    // This function will be called when the button is clicked
+    function openIframe() {
+        alert("Button was clicked! Implement your functionality here.");
+        // Add your custom logic here
+        // For example, you could show/hide an iframe or load specific content into it
+    }
+
+    // Wait for the DOM to fully load before adding the event listener
+    document.addEventListener("DOMContentLoaded", function() {
+        // Find the button by its class name and add a click event listener
+        var button = document.querySelector(".open-iframe-btn");
+        if (button) {
+            button.addEventListener("click", openIframe);
+        } else {
+            console.error("Button with class 'open-iframe-btn' not found!");
+        }
+    });
+</script>
+
+<!-- OneTrust Cookies Consent Notice end for aritzia.com -->
+
+  
+  <!-- OneTrust Cookies Consent Notice end for aritzia.com -->
+</head>
+<body>
+    <button id="ot-sdk-btn" class="ot-sdk-show-settings">
+        Cookie Settings
+      </button>
+      
+        <!-- Button to trigger the iframe or any other action -->
+        <button class="open-iframe-btn">here</button>
+        
+        <!-- Example of an iframe that might be controlled -->
+        <iframe id="example-iframe" src="about:blank" style="display:none;"></iframe>
+    
+
+</body>
+</html>
+
