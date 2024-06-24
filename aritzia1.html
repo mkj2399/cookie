@@ -3,68 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cookie 2Preferences</title>
-<!-- OneTrust Cookies Consent Notice start for aritzia.com -->
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test" ></script>
-<script type="text/javascript">
-  function OptanonWrapper() { 
-    if(OneTrust.IsAlertBoxClosed() === false){
+  <title>Cookie Preferences</title>
+  <!-- OneTrust Cookies Consent Notice start for aritzia.com -->
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test"></script>
+  <script type="text/javascript">
+    function OptanonWrapper() {
+      if (OneTrust.IsAlertBoxClosed() === false) {
         var banner = document.getElementById("onetrust-banner-sdk");
         var prefpc = document.getElementById("onetrust-pc-sdk");
         var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[1];
-        banner.style = "display: none;";
-        /* prefpc.style = "display: block !important;animation: example1 3s linear"; */
-        prefpc.style = "display: none;";
-        /* filter.style = "display: block !important;"; */
-        filter.style = "display: none;";
-        /* Move it (define the animation) */
-}
-}
-</script>
-<style>
-@keyframes example1 {
- 0%   { 
- transform: translateY(-200%);      
- }
- 100% { 
- transform: translateY(0%); 
- }
-}
-    </style>
-    <style>
-      #show-div-btn {
-          display: none;
+        banner.style.display = "none";
+        prefpc.style.display = "none";
+        filter.style.display = "none";
       }
-      .hidden {
-          display: none;
+    }
+  </script>
+  <style>
+    @keyframes example1 {
+      0% { 
+        transform: translateY(-200%);      
       }
+      100% { 
+        transform: translateY(0%); 
+      }
+    }
+    #show-div-btn {
+      display: none;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
-<!-- OneTrust Cookies Consent Notice end for aritzia.com -->
+  <!-- OneTrust Cookies Consent Notice end for aritzia.com -->
 </head>
 <body>
   <button id="show-div-btn" class="hidden">Show Preferences</button>
 
   <script>
-      document.addEventListener("DOMContentLoaded", function() {
-          const div = document.getElementById("onetrust-pc-sdk");
-          const button = document.getElementById("show-div-btn");
+    document.addEventListener("DOMContentLoaded", function() {
+      const div = document.getElementById("onetrust-pc-sdk");
+      const button = document.getElementById("show-div-btn");
 
-          function toggleDiv() {
-              if (div.style.display === "none") {
-                  div.style.display = "block !important;";
-              } else {
-                  div.style.display = "none";
-                  button.style.display = "block !important;";
-              }
-          }
+      function toggleDiv() {
+        if (div.style.display === "none" || div.style.display === "") {
+          div.style.display = "block";
+        } else {
+          div.style.display = "none";
+        }
+      }
 
-          button.addEventListener("click", toggleDiv);
+      button.addEventListener("click", toggleDiv);
 
-          // Initial check to see if the div is hidden and show the button accordingly
-          if (div.style.display === "none") {
-              button.style.display = "block";
-          }
-      });
+      // Initial check to see if the div is hidden and show the button accordingly
+      if (div.style.display === "none" || div.style.display === "") {
+        button.style.display = "block";
+      }
+    });
   </script>
 </body>
 </html>
