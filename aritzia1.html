@@ -35,33 +35,69 @@
         z-index: 1000; /* Ensure the button stays on top */
     }
 </style>
+<style>
+  .hidden {
+      display: none;
+  }
+  .ot-form-wrapper {
+      max-width: 750px;
+      height: 800px;
+      border: 1px solid #c0c2c7;
+      margin: auto;
+  }
+  .ot-form-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+  }
+</style>
 </head>
 <body>
   <div class="container">
     <button id="show-div-btn">Show Preferences</button>
+    <button id="show-form-btn">Show Form Div</button>
     <!-- Your content goes here -->
 </div>
-
+<div id="onetrust-form-sdk" class="ot-form-wrapper hidden" lang="en" aria-label="Form center" role="region">
+  <!-- OneTrust Web Form start -->
+  <iframe src="https://privacyportal.onetrust.com/webform/73cb21c4-9737-45b0-ba87-528432c7bbca/f210ef93-bff2-4af8-a2bd-bd871a2b0267"></iframe>
+  <!-- OneTrust Web Form end -->
+</div>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const button = document.getElementById("show-div-btn");
+      const toggleSdkBtn = document.getElementById("toggle-sdk-btn");
+      const showFormBtn = document.getElementById("show-form-btn");
 
-    button.addEventListener("click", function() {
-      const div = document.getElementById("onetrust-pc-sdk");
-      if (div) {
-        if (div.classList.contains("hidden")) {
-          div.classList.remove("hidden");
-          div.classList.remove("ot-hide");
-          div.style.display = "block";
-        } else {
-          div.classList.add("hidden");
-          div.classList.add("ot-hide");
-          div.style.display = "none";
-        }
-      } else {
-        console.error("onetrust-pc-sdk div not found.");
-      }
-    });
+      toggleSdkBtn.addEventListener("click", function() {
+          const sdkDiv = document.getElementById("onetrust-pc-sdk");
+          
+          if (sdkDiv) {
+              if (sdkDiv.classList.contains("hidden")) {
+                  sdkDiv.classList.remove("hidden");
+              } else {
+                  sdkDiv.classList.add("hidden");
+              }
+          } else {
+              console.error("onetrust-pc-sdk div not found.");
+          }
+      });
+
+      showFormBtn.addEventListener("click", function() {
+          const sdkDiv = document.getElementById("onetrust-pc-sdk");
+          const formDiv = document.getElementById("onetrust-form-sdk");
+
+          if (sdkDiv && formDiv) {
+              const sdkStyle = window.getComputedStyle(sdkDiv);
+              formDiv.style.maxWidth = sdkStyle.maxWidth;
+              formDiv.style.height = sdkStyle.height;
+              formDiv.style.border = sdkStyle.border;
+              formDiv.style.margin = sdkStyle.margin;
+
+              formDiv.classList.remove("hidden");
+          } else {
+              console.error("Div not found.");
+          }
+      });
   });
 </script>
 </body>
