@@ -20,10 +20,27 @@
   }
     }
   </script>
+  <style>
+    .container {
+        position: relative;
+        height: 400px; /* Adjust the height as needed */
+        border: 1px solid #ccc;
+    }
 
+    #show-div-btn {
+        position: absolute;
+        top: 10px; /* Adjust the distance from the top as needed */
+        left: 50%; /* Center the button horizontally */
+        transform: translateX(-50%); /* Center the button horizontally */
+        z-index: 1000; /* Ensure the button stays on top */
+    }
+</style>
 </head>
 <body>
-  <button id="show-div-btn">Show Preferences</button>
+  <div class="container">
+    <button id="show-div-btn">Show Preferences</button>
+    <!-- Your content goes here -->
+</div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
