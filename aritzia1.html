@@ -65,39 +65,41 @@
 </div>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-      const toggleSdkBtn = document.getElementById("toggle-sdk-btn");
-      const showFormBtn = document.getElementById("show-form-btn");
+    const button = document.getElementById("show-div-btn");
+    const showFormBtn = document.getElementById("show-form-btn");
 
-      toggleSdkBtn.addEventListener("click", function() {
-          const sdkDiv = document.getElementById("onetrust-pc-sdk");
-          
-          if (sdkDiv) {
-              if (sdkDiv.classList.contains("hidden")) {
-                  sdkDiv.classList.remove("hidden");
-              } else {
-                  sdkDiv.classList.add("hidden");
-              }
-          } else {
-              console.error("onetrust-pc-sdk div not found.");
-          }
-      });
+    button.addEventListener("click", function() {
+      const div = document.getElementById("onetrust-pc-sdk");
+      if (div) {
+        if (div.classList.contains("hidden")) {
+          div.classList.remove("hidden");
+          div.classList.remove("ot-hide");
+          div.style.display = "block";
+        } else {
+          div.classList.add("hidden");
+          div.classList.add("ot-hide");
+          div.style.display = "none";
+        }
+      } else {
+        console.error("onetrust-pc-sdk div not found.");
+      }
+    });
+    showFormBtn.addEventListener("click", function() {
+      const sdkDiv = document.getElementById("onetrust-pc-sdk");
+      const formDiv = document.getElementById("onetrust-form-sdk");
 
-      showFormBtn.addEventListener("click", function() {
-          const sdkDiv = document.getElementById("onetrust-pc-sdk");
-          const formDiv = document.getElementById("onetrust-form-sdk");
+      if (sdkDiv && formDiv) {
+          const sdkStyle = window.getComputedStyle(sdkDiv);
+          formDiv.style.maxWidth = sdkStyle.maxWidth;
+          formDiv.style.height = sdkStyle.height;
+          formDiv.style.border = sdkStyle.border;
+          formDiv.style.margin = sdkStyle.margin;
 
-          if (sdkDiv && formDiv) {
-              const sdkStyle = window.getComputedStyle(sdkDiv);
-              formDiv.style.maxWidth = sdkStyle.maxWidth;
-              formDiv.style.height = sdkStyle.height;
-              formDiv.style.border = sdkStyle.border;
-              formDiv.style.margin = sdkStyle.margin;
-
-              formDiv.classList.remove("hidden");
-          } else {
-              console.error("Div not found.");
-          }
-      });
+          formDiv.classList.remove("hidden");
+      } else {
+          console.error("Div not found.");
+      }
+    });
   });
 </script>
 </body>
