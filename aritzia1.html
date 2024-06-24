@@ -111,5 +111,16 @@
       observer.observe(document.body, { childList: true, subtree: true });
     });
   </script>
+
+  <script>
+
+    window.addEventListener("message", function(event) {
+        if (event.origin != 'https://privacyportal.onetrust.com') {
+            // something from an unknown domain, let's ignore it 
+            return;
+        }
+        alert("received msg from parent: " + event.data);
+    });
+</script>
 </body>
 </html>
