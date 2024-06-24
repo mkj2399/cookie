@@ -51,11 +51,9 @@
 
           function toggleDiv() {
               if (div.style.display === "none") {
-                  div.style.display = "block";
-                  button.style.display = "none";
+                  div.style.display = "block !important;";
               } else {
                   div.style.display = "none";
-                  button.style.display = "block";
               }
           }
 
