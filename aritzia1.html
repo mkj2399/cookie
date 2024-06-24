@@ -6,25 +6,21 @@
   <title>Cookie Preferences</title>
   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test"></script>
   <script type="text/javascript">
-    function OptanonWrapper() {
-      if (OneTrust.IsAlertBoxClosed() === false) {
-        var banner = document.getElementById("onetrust-banner-sdk");
-        var prefpc = document.getElementById("onetrust-pc-sdk");
-        var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[1];
-        banner.style.display = "none";
-        prefpc.style.display = "none";
-        filter.style.display = "none";
-      }
+    function OptanonWrapper() { 
+      if(OneTrust.IsAlertBoxClosed() === false){
+          var banner = document.getElementById("onetrust-banner-sdk");
+          var prefpc = document.getElementById("onetrust-pc-sdk");
+          var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[1];
+          banner.style = "display: none;";
+          /* prefpc.style = "display: block !important;animation: example1 3s linear"; */
+          prefpc.style = "display: block !important;";
+          /* filter.style = "display: block !important;"; */
+          filter.style = "display: none;";
+          /* Move it (define the animation) */
+  }
     }
   </script>
-  <style>
-    #show-div-btn {
-      display: block;
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
+
 </head>
 <body>
   <button id="show-div-btn">Show Preferences</button>
@@ -38,10 +34,10 @@
         if (div) {
           if (div.classList.contains("hidden")) {
             div.classList.remove("hidden");
-            button.textContent = "Hide Preferences";
+
           } else {
             div.classList.add("hidden");
-            button.textContent = "Show Preferences";
+
           }
         } else {
           console.error("onetrust-pc-sdk div not found.");
