@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookie Preferences</title>
-  <!-- OneTrust Cookies Consent Notice start for aritzia.com -->
   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test"></script>
   <script type="text/javascript">
     function OptanonWrapper() {
@@ -19,45 +18,35 @@
     }
   </script>
   <style>
-    @keyframes example1 {
-      0% { 
-        transform: translateY(-200%);      
-      }
-      100% { 
-        transform: translateY(0%); 
-      }
-    }
     #show-div-btn {
-      display: none;
+      display: block;
     }
     .hidden {
       display: none;
     }
   </style>
-  <!-- OneTrust Cookies Consent Notice end for aritzia.com -->
 </head>
 <body>
-  <button id="show-div-btn" class="hidden">Show Preferences</button>
+  <button id="show-div-btn">Show Preferences</button>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const div = document.getElementById("onetrust-pc-sdk");
       const button = document.getElementById("show-div-btn");
 
-      function toggleDiv() {
-        if (div.style.display === "none" || div.style.display === "") {
-          div.style.display = "block";
+      button.addEventListener("click", function() {
+        const div = document.getElementById("onetrust-pc-sdk");
+        if (div) {
+          if (div.classList.contains("hidden")) {
+            div.classList.remove("hidden");
+            button.textContent = "Hide Preferences";
+          } else {
+            div.classList.add("hidden");
+            button.textContent = "Show Preferences";
+          }
         } else {
-          div.style.display = "none";
+          console.error("onetrust-pc-sdk div not found.");
         }
-      }
-
-      button.addEventListener("click", toggleDiv);
-
-      // Initial check to see if the div is hidden and show the button accordingly
-      if (div.style.display === "none" || div.style.display === "") {
-        button.style.display = "block";
-      }
+      });
     });
   </script>
 </body>
