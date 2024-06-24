@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Preferences</title>
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test"></script>
+  <script type="text/javascript">
+    function OptanonWrapper() { 
+      if(OneTrust.IsAlertBoxClosed() === false){
+          var banner = document.getElementById("onetrust-banner-sdk");
+          var prefpc = document.getElementById("onetrust-pc-sdk");
+          var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[1];
+          banner.style = "display: none;";
+          /* prefpc.style = "display: block !important;animation: example1 3s linear"; */
+          prefpc.style = "display: none;";
+          /* filter.style = "display: block !important;"; */
+          filter.style = "display: none;";
+          /* Move it (define the animation) */
+  }
+    }
+  </script>
+  <style>
+    .container {
+        position: relative;
+        height: 400px; /* Adjust the height as needed */
+        border: 1px solid #ccc;
+    }
+
+    #show-div-btn {
+        position: absolute;
+        top: 10px; /* Adjust the distance from the top as needed */
+        left: 50%; /* Center the button horizontally */
+        transform: translateX(-50%); /* Center the button horizontally */
+        z-index: 1000; /* Ensure the button stays on top */
+    }
+</style>
+</head>
+<body>
+  <div class="container">
+    <button id="show-div-btn">Show Preferences</button>
+    <!-- Your content goes here -->
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const button = document.getElementById("show-div-btn");
+
+    button.addEventListener("click", function() {
+      const div = document.getElementById("onetrust-pc-sdk");
+      if (div) {
+        if (div.classList.contains("hidden")) {
+          div.classList.remove("hidden");
+          div.classList.remove("ot-hide");
+          div.style.display = "block";
+        } else {
+          div.classList.add("hidden");
+          div.classList.add("ot-hide");
+          div.style.display = "none";
+        }
+      } else {
+        console.error("onetrust-pc-sdk div not found.");
+      }
+    });
+  });
+</script>
+</body>
+</html>
