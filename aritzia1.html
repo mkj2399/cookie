@@ -31,9 +31,44 @@
  }
 }
     </style>
+    <style>
+      #show-div-btn {
+          display: none;
+      }
+      .hidden {
+          display: none;
+      }
+  </style>
 <!-- OneTrust Cookies Consent Notice end for aritzia.com -->
 </head>
 <body>
+  <button id="show-div-btn" class="hidden">Show Preferences</button>
+  <div id="onetrust-pc-sdk" class="otPcPanel ot-hide ot-fade-in otRelFont" lang="en" aria-label="Preference center" role="region" style="display: none;">
+      <!-- Your div content goes here -->
+  </div>
 
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const div = document.getElementById("onetrust-pc-sdk");
+          const button = document.getElementById("show-div-btn");
+
+          function toggleDiv() {
+              if (div.style.display === "none") {
+                  div.style.display = "block";
+                  button.style.display = "none";
+              } else {
+                  div.style.display = "none";
+                  button.style.display = "block";
+              }
+          }
+
+          button.addEventListener("click", toggleDiv);
+
+          // Initial check to see if the div is hidden and show the button accordingly
+          if (div.style.display === "none") {
+              button.style.display = "block";
+          }
+      });
+  </script>
 </body>
 </html>
