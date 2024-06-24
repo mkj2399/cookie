@@ -12,21 +12,8 @@
         var prefpc = document.getElementById("onetrust-pc-sdk");
         var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[1];
         banner.style = "display: none;";
-        /* prefpc.style = "display: block !important;animation: example1 3s linear"; */
         prefpc.style = "display: none;";
-        /* filter.style = "display: block !important;"; */
         filter.style = "display: none;";
-        /* Move it (define the animation) */
-
-        if (prefpc) {
-          const iframe = document.createElement("iframe");
-          iframe.src = "https://privacyportal.onetrust.com/webform/73cb21c4-9737-45b0-ba87-528432c7bbca/f210ef93-bff2-4af8-a2bd-bd871a2b0267";
-          iframe.style.cssText = "border: none; position: absolute; width: 100%; height: 100%; z-index: 99; left: 0; top: 0;";
-          iframe.classList.add("hidden"); // Start hidden
-          prefpc.appendChild(iframe);
-        } else {
-          console.error("onetrust-pc-sdk div not found.");
-        }
       }
     }
   </script>
@@ -35,20 +22,14 @@
       position: relative;
       height: 400px; /* Adjust the height as needed */
       border: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
-    #show-div-btn {
-      position: absolute;
-      top: 10px; /* Adjust the distance from the top as needed */
-      left: 50%; /* Center the button horizontally */
-      transform: translateX(-50%); /* Center the button horizontally */
-      z-index: 1000; /* Ensure the button stays on top */
-    }
-    #toggle-iframe-btn {
-      position: absolute;
-      top: 30px; /* Adjust the distance from the top as needed */
-      left: 80%; /* Center the button horizontally */
-      transform: translateX(-50%); /* Center the button horizontally */
+    .button {
+      margin: 10px 0;
       z-index: 1000; /* Ensure the button stays on top */
     }
 
@@ -72,8 +53,8 @@
 </head>
 <body>
   <div class="container">
-    <button id="show-div-btn">Show Preferences</button>
-    <button id="toggle-iframe-btn">Show/Hide Form Iframe</button>
+    <button id="show-div-btn" class="button">Show Preferences</button>
+    <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
     <!-- Your content goes here -->
   </div>
   <script>
@@ -98,18 +79,36 @@
         }
       });
 
-      toggleIframeBtn.addEventListener("click", function() {
-        const iframe = document.querySelector("#onetrust-pc-sdk iframe");
-        if (iframe) {
-          if (iframe.classList.contains("hidden")) {
-            iframe.classList.remove("hidden");
-          } else {
-            iframe.classList.add("hidden");
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.addedNodes) {
+            mutation.addedNodes.forEach(function(node) {
+              if (node.id === 'onetrust-pc-sdk') {
+                const sdkDiv = document.getElementById("onetrust-pc-sdk");
+                if (sdkDiv) {
+                  const iframe = document.createElement("iframe");
+                  iframe.src = "https://privacyportal.onetrust.com/webform/73cb21c4-9737-45b0-ba87-528432c7bbca/f210ef93-bff2-4af8-a2bd-bd871a2b0267";
+                  iframe.style.cssText = "border: none; position: absolute; width: 100%; height: 100%; z-index: 99; left: 0; top: 0;";
+                  iframe.classList.add("hidden"); // Start hidden
+                  sdkDiv.appendChild(iframe);
+
+                  toggleIframeBtn.addEventListener("click", function() {
+                    if (iframe.classList.contains("hidden")) {
+                      iframe.classList.remove("hidden");
+                    } else {
+                      iframe.classList.add("hidden");
+                    }
+                  });
+                } else {
+                  console.error("onetrust-pc-sdk div not found.");
+                }
+              }
+            });
           }
-        } else {
-          console.error("Iframe not found.");
-        }
+        });
       });
+
+      observer.observe(document.body, { childList: true, subtree: true });
     });
   </script>
 </body>
