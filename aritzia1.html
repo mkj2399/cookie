@@ -42,25 +42,27 @@
     <!-- Your content goes here -->
 </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const button = document.getElementById("show-div-btn");
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const button = document.getElementById("show-div-btn");
 
-      button.addEventListener("click", function() {
-        const div = document.getElementById("onetrust-pc-sdk");
-        if (div) {
-          if (div.classList.contains("hidden")) {
-            div.classList.remove("hidden");
-
-          } else {
-            div.classList.add("hidden");
-
-          }
+    button.addEventListener("click", function() {
+      const div = document.getElementById("onetrust-pc-sdk");
+      if (div) {
+        if (div.classList.contains("hidden")) {
+          div.classList.remove("hidden");
+          div.classList.remove("ot-hide");
+          div.style.display = "block";
         } else {
-          console.error("onetrust-pc-sdk div not found.");
+          div.classList.add("hidden");
+          div.classList.add("ot-hide");
+          div.style.display = "none";
         }
-      });
+      } else {
+        console.error("onetrust-pc-sdk div not found.");
+      }
     });
-  </script>
+  });
+</script>
 </body>
 </html>
