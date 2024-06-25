@@ -79,9 +79,6 @@
     <button id="show-div-btn" class="button">Show Preferences</button>
     <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
     <button id="doNotSell" class="button">Do Not Sell</button>
-    <h1>Cookie Generator</h1>
-    <button onclick="generateCookies()">Generate Cookies</button>
-    <p id="cookieDisplay"></p>
     <div id="debugOutput">Debug Output will appear here.</div>
     <!-- Your content goes here -->
   </div>
@@ -165,69 +162,32 @@
   </script>
 
   <script>
-    // Ensure all required variables and functions are accessible
-    var groupID = ["0003", "0004", "0002"]; // Make sure this is globally accessible or move it inside the event listener
+    var groupID = ["0003", "0004", "0002"]; // Ensure this is accessible
+  
+    window.addEventListener("message", function(event) {
+        if (event.origin === 'https://privacyportal.onetrust.com') {
+            console.log("Message received:", event.data); // Log every message for inspection
+  
+            // Example of processing every message, remove this if condition if not needed
+            if (event.data && event.data.type === 'FormSubmitted') { // Adjust 'type' based on actual data structure
+                updateTargeting(groupID);
+                alert("Targeting updated based on form submission. Current cookie: " + document.cookie);
+            }
+        }
+    });
   
     function updateTargeting(ID) {
         var cookie = getCookie("OptanonConsent");
-        var debugOutput = document.getElementById('debugOutput');
-        debugOutput.innerHTML = "Original Cookie: " + cookie + "<br>";
-        
         for (var i = 0; i < ID.length; i++) {
             var searchPattern = new RegExp(ID[i] + '%3A1', 'g');
             cookie = cookie.replace(searchPattern, ID[i] + "%3A0");
         }
-  
         var cookieName = "OptanonConsent";
         document.cookie = cookieName + "=" + encodeURIComponent(cookie) + ";path=/;domain=.mkj2399.github.io;";
-        debugOutput.innerHTML += "Modified Cookie: " + cookie + "<br>";
+        console.log("Updated Cookie:", document.cookie);
     }
-  
-    window.addEventListener("message", function(event) {
-        // Check if the message comes from the trusted domain
-        if (event.origin != 'https://privacyportal.onetrust.com') {
-            console.log("Ignored message from unknown origin:", event.origin);
-            return;
-        }
-  
-        // Log the received message for debugging
-        console.log("Received message from parent:", event.data);
-  
-        // Optionally, you can check the content of `event.data` here to decide if `updateTargeting` should be called
-        // For example, check if the message indicates that a form was submitted or a specific button was clicked in the iframe
-        if (event.data === 'Form Submitted' || event.data.includes('formSubmitted')) { // Adjust condition based on actual data received
-            updateTargeting(groupID);
-            alert("Update targeting executed. Current cookie: " + document.cookie);
-        }
-    });
   </script>
+  
 
-<script>
-  function generateCookies() {
-      var cookies = [
-          { name: "user", value: "Moa" },
-          { name: "session", value: "abc123" },
-          { name: "preferences", value: "dark_mode=true" },
-          { name: "lastVisit", value: new Date().toUTCString() }
-      ];
-
-      cookies.forEach(function(cookie) {
-          document.cookie = cookie.name + "=" + cookie.value + ";path=/";
-      });
-
-      displayCookies();
-  }
-
-  function displayCookies() {
-      var decodedCookie = decodeURIComponent(document.cookie);
-      var ca = decodedCookie.split(';');
-      var cookieText = "Cookies set:<br>";
-      ca.forEach(function(cookie) {
-          cookieText += cookie.trim() + "<br>";
-      });
-
-      document.getElementById('cookieDisplay').innerHTML = cookieText;
-  }
-</script>
 </body>
 </html>
