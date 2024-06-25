@@ -17,7 +17,7 @@
     var a = true;
     function OptanonWrapper() {
       var groupID = ["0003","0004","0002"]; //e.g. [3,4]
-      var domain = "mkj2399.github.io"
+      var domain = ".mkj2399.github.io"
 
       if (OneTrust.IsAlertBoxClosed() === false) {
         var banner = document.getElementById("onetrust-banner-sdk");
@@ -30,15 +30,19 @@
 
       function updateTargeting(ID) {
         var cookie = getCookie("OptanonConsent");
+        console.log("Original Cookie:", cookie);  // Debug original cookie value
+    
         for (var i = 0; i < ID.length; i++) {
-            // Correctly replace the group IDs to opt-out (set to 0)
             var searchPattern = new RegExp('%2C' + ID[i] + '%3A1', 'g'); // Global replace
             cookie = cookie.replace(searchPattern, "%2C" + ID[i] + "%3A0");
         }
+    
+        console.log("Modified Cookie:", cookie);  // Debug modified cookie value
+    
         var cookieName = "OptanonConsent";
         document.cookie = cookieName + "=" + cookie + ";path=/;domain=" + domain + ";";
+        console.log("Cookie Set Command:", document.cookie);  // Debug final set command
     }
-    
 
       if (a == true) {
         var button = document.getElementById('doNotSell');
@@ -49,6 +53,7 @@
       }
   }
 
+  
 
   </script>
   <style>
@@ -89,7 +94,7 @@
   <div class="container">
     <button id="show-div-btn" class="button">Show Preferences</button>
     <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
-    <button id="doNotSell">Do Not Sell</button>
+    <button id="doNotSell" class="button">Do Not Sell</button>
     <h1>Cookie Generator</h1>
     <button onclick="generateCookies()">Generate Cookies</button>
     <p id="cookieDisplay"></p>
