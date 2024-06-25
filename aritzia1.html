@@ -174,18 +174,23 @@
     });
 
     function observeIframe(iframe) {
+      const debugOutput = document.getElementById('debugOutput');
       const iframeObserver = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
           if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+            debugOutput.innerHTML += `Iframe src changed to: ${iframe.src}<br>`;
             if (iframe.src.includes('form-submitted')) {
+              debugOutput.innerHTML += `Form submission detected at: ${new Date().toLocaleString()}<br>`;
               var groupID = ["0003","0004","0002"]; // Group IDs
               updateTargeting(groupID);
+              debugOutput.innerHTML += `Cookie updated after form submission.<br>`;
             }
           }
         });
       });
 
       iframeObserver.observe(iframe, { attributes: true });
+      debugOutput.innerHTML += `Started observing iframe for src changes.<br>`;
     }
   </script>
 </body>
