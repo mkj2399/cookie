@@ -80,6 +80,9 @@
   <div class="container">
     <button id="show-div-btn" class="button">Show Preferences</button>
     <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
+    <h1>Cookie Generator</h1>
+    <button onclick="generateCookies()">Generate Cookies</button>
+    <p id="cookieDisplay"></p>
     <!-- Your content goes here -->
   </div>
   <script>
@@ -148,6 +151,34 @@
         updateTargeting(groupID);
         alert("received msg from cookie: " + document.cookie);
     });
+</script>
+
+<script>
+  function generateCookies() {
+      var cookies = [
+          { name: "user", value: "Moa" },
+          { name: "session", value: "abc123" },
+          { name: "preferences", value: "dark_mode=true" },
+          { name: "lastVisit", value: new Date().toUTCString() }
+      ];
+
+      cookies.forEach(function(cookie) {
+          document.cookie = cookie.name + "=" + cookie.value + ";path=/";
+      });
+
+      displayCookies();
+  }
+
+  function displayCookies() {
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      var cookieText = "Cookies set:<br>";
+      ca.forEach(function(cookie) {
+          cookieText += cookie.trim() + "<br>";
+      });
+
+      document.getElementById('cookieDisplay').innerHTML = cookieText;
+  }
 </script>
 </body>
 </html>
