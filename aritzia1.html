@@ -162,18 +162,20 @@
   </script>
 
   <script>
-    window.addEventListener("message", function(event) {
-        if (event.origin !== 'https://privacyportal.onetrust.com') {
-            // something from an unknown domain, let's ignore it 
-            return;
-        }
-        if (event.data === 'formSubmitted') {
-          var groupID = ["0003","0004","0002"]; // Make sure this is available here
-          updateTargeting(groupID);
-          alert("Form submitted and cookie updated: " + document.cookie);
-        }
-    });
-  </script>
+    // This function checks if the URL contains the specific path after redirection
+    function checkUrlForFormSubmission() {
+      if (window.location.href.indexOf('/form-submitted') !== -1) {
+        var groupID = ["0003","0004","0002"]; // Group IDs
+        updateTargeting(groupID);
+      }
+    }
 
+    // Run the check when the document is loaded
+    document.addEventListener("DOMContentLoaded", checkUrlForFormSubmission);
+
+    // Also, run the check whenever the history state changes
+    window.addEventListener("popstate", checkUrlForFormSubmission);
+    window.addEventListener("pushstate", checkUrlForFormSubmission);
+  </script>
 </body>
 </html>
