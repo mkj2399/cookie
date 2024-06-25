@@ -4,11 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookie Preferences</title>
-  <script type="text/javascript" src="https://cdn.cookielaw.org/consent/01904c7c-b6a0-77cb-afdd-cb1c0d466589/OtAutoBlock.js" ></script>
-  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589" ></script>
-  
-
-  
+  <script type="text/javascript" src="https://cdn.cookielaw.org/consent/01904c7c-b6a0-77cb-afdd-cb1c0d466589/OtAutoBlock.js"></script>
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589"></script>
   
   <script type="text/javascript">
     var a = true;
@@ -30,8 +27,8 @@
         filter.style = "display: none;";
       }
     }
-   
   </script>
+  
   <style>
     .container {
       position: relative;
@@ -83,6 +80,7 @@
     <div id="debugOutput">Debug Output will appear here.</div>
     <!-- Your content goes here -->
   </div>
+
   <script>
     function getCookie(name) {
       var value = "; " + document.cookie;
@@ -107,6 +105,7 @@
 
     document.addEventListener("DOMContentLoaded", OptanonWrapper);
   </script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const toggleSdkBtn = document.getElementById("show-div-btn");
@@ -164,14 +163,17 @@
 
   <script>
     window.addEventListener("message", function(event) {
-        if (event.origin != 'https://privacyportal.onetrust.com') {
+        if (event.origin !== 'https://privacyportal.onetrust.com') {
             // something from an unknown domain, let's ignore it 
             return;
         }
-        updateTargeting(groupID);
-        alert("received msg from cookie: " + document.cookie);
+        if (event.data === 'formSubmitted') {
+          var groupID = ["0003","0004","0002"]; // Make sure this is available here
+          updateTargeting(groupID);
+          alert("Form submitted and cookie updated: " + document.cookie);
+        }
     });
-</script>
+  </script>
 
 </body>
 </html>
