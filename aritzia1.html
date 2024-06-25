@@ -16,7 +16,7 @@
     }
     var a = true;
     function OptanonWrapper() {
-      var groupID = ["0002","0003","0004"]; //e.g. [3,4]
+      var groupID = ["0003","0004","0002"]; //e.g. [3,4]
       var domain = "mkj2399.github.io"
 
       if (OneTrust.IsAlertBoxClosed() === false) {
@@ -31,14 +31,14 @@
       function updateTargeting(ID) {
         var cookie = getCookie("OptanonConsent");
         for (var i = 0; i < ID.length; i++) {
-            cookie = cookie.replace('%2C' + ID[i] + '%3A0', "%2C" + ID[i] + "%3A0");
-            cookie = cookie.replace('%2C' + ID[i] + '%3A1', "%2C" + ID[i] + "%3A0");
-            var cookieName = "OptanonConsent";
-            OptanonActiveGroups = OptanonActiveGroups.replace("," + ID[i] + ",", ",");
-            OnetrustActiveGroups = OnetrustActiveGroups.replace("," + ID[i] + ",", ",");
+            // Correctly replace the group IDs to opt-out (set to 0)
+            var searchPattern = new RegExp('%2C' + ID[i] + '%3A1', 'g'); // Global replace
+            cookie = cookie.replace(searchPattern, "%2C" + ID[i] + "%3A0");
         }
+        var cookieName = "OptanonConsent";
         document.cookie = cookieName + "=" + cookie + ";path=/;domain=" + domain + ";";
-      }
+    }
+    
 
       if (a == true) {
         var button = document.getElementById('doNotSell');
