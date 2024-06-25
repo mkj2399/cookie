@@ -8,13 +8,16 @@
   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589"></script>
   
   <script type="text/javascript">
+    var a = true;
     function OptanonWrapper() {
       var groupID = ["0003","0004","0002"]; // Group IDs
-      var button = document.getElementById('doNotSell');
-      button.addEventListener('click', function handler() {
-          updateTargeting(groupID);
-      });
-
+      if (a) {
+        var button = document.getElementById('doNotSell');
+        button.addEventListener('click', function handler() {
+            updateTargeting(groupID);
+        });
+        a = false;
+      }
       if (OneTrust.IsAlertBoxClosed() === false) {
         var banner = document.getElementById("onetrust-banner-sdk");
         var prefpc = document.getElementById("onetrust-pc-sdk");
@@ -155,6 +158,9 @@
                       iframe.classList.add("hidden");
                     }
                   });
+
+                  // Observe changes within the iframe
+                  observeIframe(iframe);
                 } else {
                   console.error("onetrust-pc-sdk div not found.");
                 }
@@ -166,23 +172,21 @@
 
       observer.observe(document.body, { childList: true, subtree: true });
     });
-  </script>
 
-  <script>
-    // This function checks if the URL contains the specific path after redirection
-    function checkUrlForFormSubmission() {
-      if (window.location.href.indexOf('/form-submitted') !== -1) {
-        var groupID = ["0003","0004","0002"]; // Group IDs
-        updateTargeting(groupID);
-      }
+    function observeIframe(iframe) {
+      const iframeObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+            if (iframe.src.includes('form-submitted')) {
+              var groupID = ["0003","0004","0002"]; // Group IDs
+              updateTargeting(groupID);
+            }
+          }
+        });
+      });
+
+      iframeObserver.observe(iframe, { attributes: true });
     }
-
-    // Run the check when the document is loaded
-    document.addEventListener("DOMContentLoaded", checkUrlForFormSubmission);
-
-    // Also, run the check whenever the history state changes
-    window.addEventListener("popstate", checkUrlForFormSubmission);
-    window.addEventListener("pushstate", checkUrlForFormSubmission);
   </script>
 </body>
 </html>
