@@ -64,16 +64,25 @@
       height: 100%;
       border: none;
     }
+    #debugOutput {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f8f8f8;
+      border: 1px solid #ccc;
+      width: 100%;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <button id="show-div-btn" class="button">Show Preferences</button>
     <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
-    <button id="doNotSell">Do Not Sell</button>
+    <button id="doNotSell" class="button">Do Not Sell</button>
     <h1>Cookie Generator</h1>
     <button onclick="generateCookies()">Generate Cookies</button>
     <p id="cookieDisplay"></p>
+    <div id="debugOutput">Debug Output will appear here.</div>
     <!-- Your content goes here -->
   </div>
   <script>
