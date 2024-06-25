@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Preferences</title>
+  <script type="text/javascript" src="https://cdn.cookielaw.org/consent/01904c7c-b6a0-77cb-afdd-cb1c0d466589/OtAutoBlock.js" ></script>
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589" ></script>
+  <style>
+    .container {
+      position: relative;
+      height: 400px; /* Adjust the height as needed */
+      border: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .button {
+      margin: 10px 0;
+      z-index: 1000; /* Ensure the button stays on top */
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .ot-form-wrapper {
+      max-width: 750px;
+      height: 800px;
+      border: 1px solid #c0c2c7;
+      margin: auto;
+    }
+
+    .ot-form-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #debugOutput {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f8f8f8;
+      border: 1px solid #ccc;
+      width: 100%;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button id="show-div-btn" class="button">Show Preferences</button>
+    <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
+    <button id="doNotSell" class="button">Do Not Sell</button>
+    <h1>Cookie Generator</h1>
+    <button onclick="generateCookies()">Generate Cookies</button>
+    <p id="cookieDisplay"></p>
+    <div id="debugOutput">Debug Output will appear here.</div>
+    <!-- Your content goes here -->
+  </div>
+  <script>
+    function getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    function updateTargeting(ID) {
+      var cookie = getCookie("OptanonConsent");
+      var debugOutput = document.getElementById('debugOutput');
+      debugOutput.innerHTML = "Original Cookie: " + cookie + "<br>";
+      
+      for (var i = 0; i < ID.length; i++) {
+          var searchPattern = new RegExp(ID[i] + '%3A1');
+          cookie = cookie.replace(searchPattern, ID[i] + "%3A0");
+      }
+
+      var cookieName = "OptanonConsent";
+      document.cookie = cookieName + "=" + cookie + ";path=/;domain=.mkj2399.github.io;";
+      debugOutput.innerHTML += "Modified Cookie: " + cookie + "<br>";
+    }
+
+    var a = true;
+    function OptanonWrapper() {
+      var groupID = ["0003","0004","0002"]; // Group IDs
+      if (a) {
+        var button = document.getElementById('doNotSell');
+        button.addEventListener('click', function handler() {
+            updateTargeting(groupID);
+        });
+        a = false;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", OptanonWrapper);
+  </script>
+</body>
+</html>
