@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookie Preferences</title>
-  <script type="text/javascript" src="https://cdn.cookielaw.org/consent/01904c7c-b6a0-77cb-afdd-cb1c0d466589/OtAutoBlock.js"></script>
-  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589"></script>
+  <script type="text/javascript" src="https://cdn.cookielaw.org/consent/01904c7c-b6a0-77cb-afdd-cb1c0d466589/OtAutoBlock.js" ></script>
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589" ></script>
+  
+
+  
   
   <script type="text/javascript">
     var a = true;
@@ -22,13 +25,55 @@
         var banner = document.getElementById("onetrust-banner-sdk");
         var prefpc = document.getElementById("onetrust-pc-sdk");
         var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[1];
-        banner.style.display = "none";
-        prefpc.style.display = "none";
-        filter.style.display = "none";
+        banner.style = "display: none;";
+        prefpc.style = "display: none;";
+        filter.style = "display: none;";
       }
     }
+   
   </script>
+
+  <script>
+    window.addEventListener("message", function(event) {
+      if (event.origin != 'https://privacyportal.onetrust.com/') {
+        // Something from an unknown domain, let's ignore it
+        return;
+      }
   
+      // Log the received message for debugging
+      console.log("Received message from parent:", event.data);
+  
+      // Check if the message contains the word "state"
+      if (event.data.includes("state")) {
+        alert("Message contains 'state': " + event.data);
+  
+        // Execute the "Do Not Sell" action
+        var groupID = ["0003","0004","0002"]; // Group IDs
+        updateTargeting(groupID);
+      }
+    });
+  
+    function updateTargeting(ID) {
+      var cookie = getCookie("OptanonConsent");
+      var debugOutput = document.getElementById('debugOutput');
+      debugOutput.innerHTML = "Original Cookie: " + cookie + "<br>";
+      
+      for (var i = 0; i < ID.length; i++) {
+          var searchPattern = new RegExp(ID[i] + '%3A1');
+          cookie = cookie.replace(searchPattern, ID[i] + "%3A0");
+      }
+  
+      var cookieName = "OptanonConsent";
+      document.cookie = cookieName + "=" + cookie + ";path=/;domain=.mkj2399.github.io;";
+      debugOutput.innerHTML += "Modified Cookie: " + cookie + "<br>";
+    }
+  
+    function getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+  </script>
   <style>
     .container {
       position: relative;
@@ -80,7 +125,6 @@
     <div id="debugOutput">Debug Output will appear here.</div>
     <!-- Your content goes here -->
   </div>
-
   <script>
     function getCookie(name) {
       var value = "; " + document.cookie;
@@ -103,19 +147,8 @@
       debugOutput.innerHTML += "Modified Cookie: " + cookie + "<br>";
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-      if (typeof OneTrust !== 'undefined') {
-        OptanonWrapper();
-      } else {
-        document.addEventListener('OneTrustLoaded', OptanonWrapper);
-      }
-    });
-
-    document.addEventListener("OneTrustLoaded", function() {
-      OptanonWrapper();
-    });
+    document.addEventListener("DOMContentLoaded", OptanonWrapper);
   </script>
-
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const toggleSdkBtn = document.getElementById("show-div-btn");
@@ -158,9 +191,6 @@
                       iframe.classList.add("hidden");
                     }
                   });
-
-                  // Observe changes within the iframe
-                  observeIframe(iframe);
                 } else {
                   console.error("onetrust-pc-sdk div not found.");
                 }
@@ -172,26 +202,9 @@
 
       observer.observe(document.body, { childList: true, subtree: true });
     });
-
-    function observeIframe(iframe) {
-      const debugOutput = document.getElementById('debugOutput');
-      const iframeObserver = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
-            debugOutput.innerHTML += `Iframe src changed to: ${iframe.src}<br>`;
-            if (iframe.src.includes('form-submitted')) {
-              debugOutput.innerHTML += `Form submission detected at: ${new Date().toLocaleString()}<br>`;
-              var groupID = ["0003","0004","0002"]; // Group IDs
-              updateTargeting(groupID);
-              debugOutput.innerHTML += `Cookie updated after form submission.<br>`;
-            }
-          }
-        });
-      });
-
-      iframeObserver.observe(iframe, { attributes: true });
-      debugOutput.innerHTML += `Started observing iframe for src changes.<br>`;
-    }
   </script>
+
+  
+
 </body>
 </html>
