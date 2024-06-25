@@ -165,17 +165,42 @@
   </script>
 
   <script>
-
+    // Ensure all required variables and functions are accessible
+    var groupID = ["0003", "0004", "0002"]; // Make sure this is globally accessible or move it inside the event listener
+  
+    function updateTargeting(ID) {
+        var cookie = getCookie("OptanonConsent");
+        var debugOutput = document.getElementById('debugOutput');
+        debugOutput.innerHTML = "Original Cookie: " + cookie + "<br>";
+        
+        for (var i = 0; i < ID.length; i++) {
+            var searchPattern = new RegExp(ID[i] + '%3A1', 'g');
+            cookie = cookie.replace(searchPattern, ID[i] + "%3A0");
+        }
+  
+        var cookieName = "OptanonConsent";
+        document.cookie = cookieName + "=" + encodeURIComponent(cookie) + ";path=/;domain=.mkj2399.github.io;";
+        debugOutput.innerHTML += "Modified Cookie: " + cookie + "<br>";
+    }
+  
     window.addEventListener("message", function(event) {
+        // Check if the message comes from the trusted domain
         if (event.origin != 'https://privacyportal.onetrust.com') {
-            // something from an unknown domain, let's ignore it 
+            console.log("Ignored message from unknown origin:", event.origin);
             return;
         }
-        alert("received msg from parent: " + event.data);
-        updateTargeting(groupID);
-        alert("received msg from cookie: " + document.cookie);
+  
+        // Log the received message for debugging
+        console.log("Received message from parent:", event.data);
+  
+        // Optionally, you can check the content of `event.data` here to decide if `updateTargeting` should be called
+        // For example, check if the message indicates that a form was submitted or a specific button was clicked in the iframe
+        if (event.data === 'Form Submitted' || event.data.includes('formSubmitted')) { // Adjust condition based on actual data received
+            updateTargeting(groupID);
+            alert("Update targeting executed. Current cookie: " + document.cookie);
+        }
     });
-</script>
+  </script>
 
 <script>
   function generateCookies() {
