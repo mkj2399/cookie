@@ -32,48 +32,6 @@
     }
    
   </script>
-
-  <script>
-    window.addEventListener("message", function(event) {
-      if (event.origin != 'https://privacyportal.onetrust.com/') {
-        // Something from an unknown domain, let's ignore it
-        return;
-      }
-  
-      // Log the received message for debugging
-      console.log("Received message from parent:", event.data);
-  
-      // Check if the message contains the word "state"
-      if (event.data.includes("state")) {
-        alert("Message contains 'state': " + event.data);
-  
-        // Execute the "Do Not Sell" action
-        var groupID = ["0003","0004","0002"]; // Group IDs
-        updateTargeting(groupID);
-      }
-    });
-  
-    function updateTargeting(ID) {
-      var cookie = getCookie("OptanonConsent");
-      var debugOutput = document.getElementById('debugOutput');
-      debugOutput.innerHTML = "Original Cookie: " + cookie + "<br>";
-      
-      for (var i = 0; i < ID.length; i++) {
-          var searchPattern = new RegExp(ID[i] + '%3A1');
-          cookie = cookie.replace(searchPattern, ID[i] + "%3A0");
-      }
-  
-      var cookieName = "OptanonConsent";
-      document.cookie = cookieName + "=" + cookie + ";path=/;domain=.mkj2399.github.io;";
-      debugOutput.innerHTML += "Modified Cookie: " + cookie + "<br>";
-    }
-  
-    function getCookie(name) {
-      var value = "; " + document.cookie;
-      var parts = value.split("; " + name + "=");
-      if (parts.length == 2) return parts.pop().split(";").shift();
-    }
-  </script>
   <style>
     .container {
       position: relative;
@@ -204,7 +162,6 @@
     });
   </script>
 
-  
 
 </body>
 </html>
