@@ -48,7 +48,6 @@
       height: 800px;
       border: 1px solid #c0c2c7;
       margin: auto;
-      position: relative;
     }
     .ot-form-wrapper iframe {
       width: 100%;
@@ -62,19 +61,6 @@
       border: 1px solid #ccc;
       width: 100%;
       text-align: left;
-    }
-    #close-iframe-btn {
-      background-image: url("https://cdn.cookielaw.org/logos/static/ot_close.svg");
-      background-size: contain;
-      background-repeat: no-repeat;
-      width: 30px;
-      height: 30px;
-      border: none;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 1000;
-      cursor: pointer;
     }
   </style>
 </head>
@@ -124,37 +110,27 @@
             // Check for the deeply nested structure
             if (node.nodeType === 1 && node.querySelector('#onetrust-pc-sdk')) {
               const sdkDiv = node.querySelector("#onetrust-pc-sdk");
-              if (sdkDiv && !sdkDiv.querySelector("iframe")) { // Ensure only one iframe is created
+              if (sdkDiv) {
                 const iframe = document.createElement("iframe");
                 iframe.src = "https://privacyportal.onetrust.com/webform/73cb21c4-9737-45b0-ba87-528432c7bbca/f210ef93-bff2-4af8-a2bd-bd871a2b0267";
                 iframe.style.cssText = "border: none; position: absolute; width: 100%; height: 100%; z-index: 99; left: 0; top: 0;";
                 iframe.classList.add("hidden"); // Start hidden
                 sdkDiv.appendChild(iframe);
 
-                const closeIframeBtn = document.createElement("button");
-                closeIframeBtn.id = "close-iframe-btn";
-                closeIframeBtn.style.cssText = "background-image: url('https://cdn.cookielaw.org/logos/static/ot_close.svg'); background-size: contain; background-repeat: no-repeat; width: 30px; height: 30px; border: none; position: absolute; top: 10px; right: 10px; z-index: 1000; cursor: pointer;";
-                closeIframeBtn.classList.add("hidden"); // Start hidden
-                closeIframeBtn.addEventListener("click", function() {
-                  iframe.classList.add("hidden");
-                  closeIframeBtn.classList.add("hidden");
-                });
-                sdkDiv.appendChild(closeIframeBtn);
-
                 const toggleIframeBtn = sdkDiv.querySelector("#toggle-iframe-btn");
                 if (toggleIframeBtn) {
                   toggleIframeBtn.addEventListener("click", function() {
                     if (iframe.classList.contains("hidden")) {
                       iframe.classList.remove("hidden");
-                      closeIframeBtn.classList.remove("hidden");
                     } else {
                       iframe.classList.add("hidden");
-                      closeIframeBtn.classList.add("hidden");
                     }
                   });
                 } else {
                   console.error("Toggle iframe button not found.");
                 }
+              } else {
+                console.error("onetrust-pc-sdk div not found.");
               }
             }
           });
