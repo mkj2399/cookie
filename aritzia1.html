@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookie Preferences</title>
-  <script type="text/javascript" src="https://cdn.cookielaw.org/consent/01904c7c-b6a0-77cb-afdd-cb1c0d466589/OtAutoBlock.js" ></script>
-  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589" ></script>
+  <script type="text/javascript" src="https://cdn.cookielaw.org/consent/01904c7c-b6a0-77cb-afdd-cb1c0d466589/OtAutoBlock.js"></script>
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589"></script>
   <script type="text/javascript">
     var a = true;
     function OptanonWrapper() {
@@ -13,7 +13,7 @@
       if (a) {
         var button = document.getElementById('doNotSell');
         button.addEventListener('click', function handler() {
-            updateTargeting(groupID);
+          updateTargeting(groupID);
         });
         a = false;
       }
@@ -68,14 +68,13 @@
 <body>
   <div class="container">
     <button id="show-div-btn" class="button">Show Preferences</button>
-    <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
     <button id="doNotSell" class="button">Do Not Sell</button>
     <div id="debugOutput">Debug Output will appear here.</div>
     <!-- Your content goes here -->
     <div class="nested-div-1">
       <div class="nested-div-2">
         <div id="iframe-container" class="nested-div-3">
-          <!-- Button moved inside nested divs -->
+          <!-- Button inside nested divs -->
           <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
         </div>
       </div>
@@ -92,10 +91,10 @@
       var cookie = getCookie("OptanonConsent");
       var debugOutput = document.getElementById('debugOutput');
       debugOutput.innerHTML = "Original Cookie: " + cookie + "<br>";
-      
+
       for (var i = 0; i < ID.length; i++) {
-          var searchPattern = new RegExp(ID[i] + '%3A1');
-          cookie = cookie.replace(searchPattern, ID[i] + "%3A0");
+        var searchPattern = new RegExp(ID[i] + '%3A1');
+        cookie = cookie.replace(searchPattern, ID[i] + "%3A0");
       }
 
       var cookieName = "OptanonConsent";
@@ -156,6 +155,20 @@
       });
 
       observer.observe(document.body, { childList: true, subtree: true });
+
+      // Ensure that the button inside the nested div has the event listener attached
+      toggleIframeBtn.addEventListener("click", function() {
+        const iframe = document.querySelector("#iframe-container iframe");
+        if (iframe) {
+          if (iframe.classList.contains("hidden")) {
+            iframe.classList.remove("hidden");
+          } else {
+            iframe.classList.add("hidden");
+          }
+        } else {
+          console.error("Iframe not found.");
+        }
+      });
     });
   </script>
 </body>
