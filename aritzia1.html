@@ -62,13 +62,6 @@
       width: 100%;
       text-align: left;
     }
-    .close-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 100;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -124,26 +117,13 @@
                 iframe.classList.add("hidden"); // Start hidden
                 sdkDiv.appendChild(iframe);
 
-                const closeButton = document.createElement("img");
-                closeButton.src = "https://cdn.cookielaw.org/logos/static/ot_close.svg";
-                closeButton.style.cssText = "border: none; position: absolute; width: 100%; height: 100%; z-index: 99; right: 0; top: 0;";
-                closeButton.classList.add("close-button");
-                closeButton.classList.add("hidden"); // Start hidden
-                closeButton.addEventListener("click", function() {
-                  iframe.classList.add("hidden");
-                  closeButton.classList.add("hidden");
-                });
-                sdkDiv.appendChild(closeButton);
-
                 const toggleIframeBtn = sdkDiv.querySelector("#toggle-iframe-btn");
                 if (toggleIframeBtn) {
                   toggleIframeBtn.addEventListener("click", function() {
                     if (iframe.classList.contains("hidden")) {
                       iframe.classList.remove("hidden");
-                      closeButton.classList.remove("hidden");
                     } else {
                       iframe.classList.add("hidden");
-                      closeButton.classList.add("hidden");
                     }
                   });
                 } else {
