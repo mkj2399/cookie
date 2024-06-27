@@ -96,6 +96,41 @@
     document.addEventListener("DOMContentLoaded", function() {
       const toggleSdkBtn = document.getElementById("show-div-btn");
 
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            // Check for the deeply nested structure
+            if (node.nodeType === 1 && node.querySelector('#onetrust-pc-sdk')) {
+              const sdkDiv = node.querySelector("#onetrust-pc-sdk");
+              if (sdkDiv) {
+                const iframe = document.createElement("iframe");
+                iframe.src = "https://privacyportal.onetrust.com/webform/73cb21c4-9737-45b0-ba87-528432c7bbca/f210ef93-bff2-4af8-a2bd-bd871a2b0267";
+                iframe.style.cssText = "border: none; position: absolute; width: 100%; height: 100%; z-index: 99; left: 0; top: 0;";
+                iframe.classList.add("hidden"); // Start hidden
+                sdkDiv.appendChild(iframe);
+
+                const toggleIframeBtn = sdkDiv.querySelector("#toggle-iframe-btn");
+                if (toggleIframeBtn) {
+                  toggleIframeBtn.addEventListener("click", function() {
+                    if (iframe.classList.contains("hidden")) {
+                      iframe.classList.remove("hidden");
+                    } else {
+                      iframe.classList.add("hidden");
+                    }
+                  });
+                } else {
+                  console.error("Toggle iframe button not found.");
+                }
+              } else {
+                console.error("onetrust-pc-sdk div not found.");
+              }
+            }
+          });
+        });
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+
       toggleSdkBtn.addEventListener("click", function() {
         const div = document.getElementById("onetrust-pc-sdk");
         if (div) {
