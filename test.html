@@ -16,7 +16,15 @@
           });
           a = false;
         }
-      }
+        if(OneTrust.IsAlertBoxClosed() === false){
+          var banner = document.getElementById("onetrust-banner-sdk");
+          var prefpc = document.getElementById("onetrust-pc-sdk");
+          var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[0];
+          banner.style = "display: none;";
+          prefpc.style = "display: block !important;animation: example1 3s linear";
+          filter.style = "display: block !important;";
+          /* Move it (define the animation) */
+  }      }
     </script>
   
     <script>
@@ -38,6 +46,16 @@
       }
     </script>
     <!-- OneTrust Cookies Consent Notice end for aritzia.com -->
+    <style>
+    @keyframes example1 {
+     0%   { 
+     transform: translateY(-200%);      
+     }
+     100% { 
+     transform: translateY(0%); 
+     }
+    }
+        </style>
 </head>
 <body>
   <button id="doNotSell" class="button">Do Not Sell</button>
