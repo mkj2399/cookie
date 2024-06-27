@@ -3,8 +3,28 @@
 <!-- OneTrust Cookies Consent Notice start for aritzia.com -->
 <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test" ></script>
 <script type="text/javascript">
-function OptanonWrapper() { }
+function OptanonWrapper() { 
+  if(OneTrust.IsAlertBoxClosed() === false){
+      var banner = document.getElementById("onetrust-banner-sdk");
+      var prefpc = document.getElementById("onetrust-pc-sdk");
+      var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[0];
+      banner.style = "display: none;";
+      prefpc.style = "display: block !important;";
+      filter.style = "display: block !important;";
+      /* Move it (define the animation) */
+}
+}
 </script>
+<style>
+  @keyframes example1 {
+   0%   { 
+   transform: translateY(-200%);      
+   }
+   100% { 
+   transform: translateY(0%); 
+   }
+  }
+      </style>
 <!-- OneTrust Cookies Consent Notice end for aritzia.com -->
 </head>
 <body>
