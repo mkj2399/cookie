@@ -126,9 +126,12 @@
 
                 const closeButton = document.createElement("img");
                 closeButton.src = "https://cdn.cookielaw.org/logos/static/ot_close.svg";
+                closeButton.style.cssText = "border: none; position: absolute; width: 100%; height: 100%; z-index: 99; right: 0; top: 0;";
                 closeButton.classList.add("close-button");
+                closeButton.classList.add("hidden"); // Start hidden
                 closeButton.addEventListener("click", function() {
-                  sdkDiv.style.display = "none";
+                  iframe.classList.add("hidden");
+                  closeButton.classList.add("hidden");
                 });
                 sdkDiv.appendChild(closeButton);
 
@@ -137,8 +140,10 @@
                   toggleIframeBtn.addEventListener("click", function() {
                     if (iframe.classList.contains("hidden")) {
                       iframe.classList.remove("hidden");
+                      closeButton.classList.remove("hidden");
                     } else {
                       iframe.classList.add("hidden");
+                      closeButton.classList.add("hidden");
                     }
                   });
                 } else {
