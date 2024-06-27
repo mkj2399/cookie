@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Preferences</title>
+  <script type="text/javascript" src="https://cdn.cookielaw.org/consent/01904c7c-b6a0-77cb-afdd-cb1c0d466589/OtAutoBlock.js"></script>
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589"></script>
+  <script type="text/javascript">
+    var a = true;
+    function OptanonWrapper() {
+      var groupID = ["0003","0004","0002"]; // Group IDs
+      if (a) {
+        var button = document.getElementById('doNotSell');
+        button.addEventListener('click', function handler() {
+          updateTargeting(groupID);
+        });
+        a = false;
+      }
+      if (OneTrust.IsAlertBoxClosed() === false) {
+        var banner = document.getElementById("onetrust-banner-sdk");
+        var prefpc = document.getElementById("onetrust-pc-sdk");
+        var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[1];
+        banner.style.display = "none";
+        prefpc.style.display = "none";
+        filter.style.display = "none";
+      }
+    }
+  </script>
+  <style>
+    .container {
+      position: relative;
+      height: 400px; /* Adjust the height as needed */
+      border: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .button {
+      margin: 10px 0;
+      z-index: 1000; /* Ensure the button stays on top */
+    }
+    .hidden {
+      display: none;
+    }
+    .ot-form-wrapper {
+      max-width: 750px;
+      height: 800px;
+      border: 1px solid #c0c2c7;
+      margin: auto;
+    }
+    .ot-form-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    #debugOutput {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f8f8f8;
+      border: 1px solid #ccc;
+      width: 100%;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button id="show-div-btn" class="button">Show Preferences</button>
+    <button id="doNotSell" class="button">Do Not Sell</button>
+    <div id="debugOutput">Debug Output will appear here.</div>
+    <div class="nested-div-1">
+      <div class="nested-div-2">
+        <div id="iframe-container" class="nested-div-3">
+          <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    function updateTargeting(ID) {
+      var cookie = getCookie("OptanonConsent");
+      var debugOutput = document.getElementById('debugOutput');
+      debugOutput.innerHTML = "Original Cookie: " + cookie + "<br>";
+
+      for (var i = 0; i < ID.length; i++) {
+        var searchPattern = new RegExp(ID[i] + '%3A1');
+        cookie = cookie.replace(searchPattern, ID[i] + "%3A0");
+      }
+
+      var cookieName = "OptanonConsent";
+      document.cookie = cookieName + "=" + cookie + ";path=/;domain=.mkj2399.github.io;";
+      debugOutput.innerHTML += "Modified Cookie: " + cookie + "<br>";
+    }
+
+    document.addEventListener("DOMContentLoaded", OptanonWrapper);
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const toggleSdkBtn = document.getElementById("show-div-btn");
+      const toggleIframeBtn = document.getElementById("toggle-iframe-btn");
+
+      toggleSdkBtn.addEventListener("click", function() {
+        const div = document.getElementById("onetrust-pc-sdk");
+        if (div) {
+          if (div.classList.contains("hidden")) {
+            div.classList.remove("hidden");
+            div.classList.remove("ot-hide");
+            div.style.display = "block";
+          } else {
+            div.classList.add("hidden");
+            div.classList.add("ot-hide");
+            div.style.display = "none";
+          }
+        } else {
+          console.error("onetrust-pc-sdk div not found.");
+        }
+      });
+
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.id === 'onetrust-pc-sdk') {
+              const sdkDiv = document.getElementById("onetrust-pc-sdk");
+              if (sdkDiv) {
+                const iframe = document.createElement("iframe");
+                iframe.src = "https://privacyportal.onetrust.com/webform/73cb21c4-9737-45b0-ba87-528432c7bbca/f210ef93-bff2-4af8-a2bd-bd871a2b0267";
+                iframe.style.cssText = "border: none; position: absolute; width: 100%; height: 100%; z-index: 99; left: 0; top: 0;";
+                iframe.classList.add("hidden"); // Start hidden
+                sdkDiv.appendChild(iframe);
+
+                toggleIframeBtn.addEventListener("click", function() {
+                  if (iframe.classList.contains("hidden")) {
+                    iframe.classList.remove("hidden");
+                  } else {
+                    iframe.classList.add("hidden");
+                  }
+                });
+              } else {
+                console.error("onetrust-pc-sdk div not found.");
+              }
+            }
+          });
+        });
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Attach the event listener to the show-div-btn after the div is created
+      toggleSdkBtn.addEventListener("click", function() {
+        const div = document.getElementById("onetrust-pc-sdk");
+        if (div) {
+          if (div.classList.contains("hidden")) {
+            div.classList.remove("hidden");
+            div.classList.remove("ot-hide");
+            div.style.display = "block";
+          } else {
+            div.classList.add("hidden");
+            div.classList.add("ot-hide");
+            div.style.display = "none";
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
