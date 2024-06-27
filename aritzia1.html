@@ -6,10 +6,6 @@
   <title>Cookie Preferences</title>
   <script type="text/javascript" src="https://cdn.cookielaw.org/consent/01904c7c-b6a0-77cb-afdd-cb1c0d466589/OtAutoBlock.js" ></script>
   <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="01904c7c-b6a0-77cb-afdd-cb1c0d466589" ></script>
-  
-
-  
-  
   <script type="text/javascript">
     var a = true;
     function OptanonWrapper() {
@@ -30,7 +26,6 @@
         filter.style = "display: none;";
       }
     }
-   
   </script>
   <style>
     .container {
@@ -42,23 +37,19 @@
       align-items: center;
       justify-content: center;
     }
-
     .button {
       margin: 10px 0;
       z-index: 1000; /* Ensure the button stays on top */
     }
-
     .hidden {
       display: none;
     }
-
     .ot-form-wrapper {
       max-width: 750px;
       height: 800px;
       border: 1px solid #c0c2c7;
       margin: auto;
     }
-
     .ot-form-wrapper iframe {
       width: 100%;
       height: 100%;
@@ -79,9 +70,16 @@
     <button id="show-div-btn" class="button">Show Preferences</button>
     <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
     <button id="doNotSell" class="button">Do Not Sell</button>
-
     <div id="debugOutput">Debug Output will appear here.</div>
     <!-- Your content goes here -->
+    <div class="nested-div-1">
+      <div class="nested-div-2">
+        <div id="iframe-container" class="nested-div-3">
+          <!-- Button moved inside nested divs -->
+          <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
+        </div>
+      </div>
+    </div>
   </div>
   <script>
     function getCookie(name) {
@@ -106,8 +104,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", OptanonWrapper);
-  </script>
-  <script>
+
     document.addEventListener("DOMContentLoaded", function() {
       const toggleSdkBtn = document.getElementById("show-div-btn");
       const toggleIframeBtn = document.getElementById("toggle-iframe-btn");
@@ -161,7 +158,5 @@
       observer.observe(document.body, { childList: true, subtree: true });
     });
   </script>
-
-
 </body>
 </html>
