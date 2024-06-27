@@ -6,20 +6,40 @@
     <!-- OneTrust Cookies Consent Notice start for aritzia.com -->
     <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="019037a2-4718-7c29-be9e-b66e351d1ab6-test" ></script>
     <script type="text/javascript">
-    function OptanonWrapper() { 
-      if(OneTrust.IsAlertBoxClosed() === false){
-          var banner = document.getElementById("onetrust-banner-sdk");
-          var prefpc = document.getElementById("onetrust-pc-sdk");
-          var filter = document.getElementsByClassName("onetrust-pc-dark-filter")[0];
-          banner.style = "display: block;";
-          prefpc.style = "display: block !important;";
-          filter.style = "display: block !important;";
-          /* Move it (define the animation) */
-    }
-    }
+      var a = true;
+      function OptanonWrapper() {
+        var groupID = ["115"]; // Group IDs
+        if (a) {
+          var button = document.getElementById('doNotSell');
+          button.addEventListener('click', function handler() {
+              updateTargeting(groupID);
+          });
+          a = false;
+        }
+      }
+    </script>
+  
+    <script>
+      function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+      }
+  
+      function updateTargeting(ID) {
+        var cookie = getCookie("OptanonConsent");
+  
+        for (var i = 0; i < ID.length; i++) {
+          var searchPattern = new RegExp(ID[i] + '%3A1');
+          cookie = cookie.replace(searchPattern, ID[i] + "%3A0");
+        }
+        var cookieName = "OptanonConsent";
+        document.cookie = cookieName + "=" + cookie + ";path=/;domain=.mkj2399.github.io;";
+      }
     </script>
     <!-- OneTrust Cookies Consent Notice end for aritzia.com -->
 </head>
 <body>
+  <button id="doNotSell" class="button">Do Not Sell</button>
 </body>
 </html>
