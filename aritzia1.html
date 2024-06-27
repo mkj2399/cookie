@@ -62,6 +62,19 @@
       width: 100%;
       text-align: left;
     }
+    #close-iframe-btn {
+      background-image: url("https://cdn.cookielaw.org/logos/static/ot_close.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 30px;
+      height: 30px;
+      border: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -73,6 +86,7 @@
       <div class="nested-div-2">
         <div id="iframe-container" class="nested-div-3">
           <button id="toggle-iframe-btn" class="button">Show/Hide Form Iframe</button>
+          <button id="close-iframe-btn" class="hidden"></button>
         </div>
       </div>
     </div>
@@ -118,16 +132,29 @@
                 sdkDiv.appendChild(iframe);
 
                 const toggleIframeBtn = sdkDiv.querySelector("#toggle-iframe-btn");
+                const closeIframeBtn = sdkDiv.querySelector("#close-iframe-btn");
+
                 if (toggleIframeBtn) {
                   toggleIframeBtn.addEventListener("click", function() {
                     if (iframe.classList.contains("hidden")) {
                       iframe.classList.remove("hidden");
+                      closeIframeBtn.classList.remove("hidden");
                     } else {
                       iframe.classList.add("hidden");
+                      closeIframeBtn.classList.add("hidden");
                     }
                   });
                 } else {
                   console.error("Toggle iframe button not found.");
+                }
+
+                if (closeIframeBtn) {
+                  closeIframeBtn.addEventListener("click", function() {
+                    iframe.classList.add("hidden");
+                    closeIframeBtn.classList.add("hidden");
+                  });
+                } else {
+                  console.error("Close iframe button not found.");
                 }
               } else {
                 console.error("onetrust-pc-sdk div not found.");
