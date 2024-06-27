@@ -109,13 +109,9 @@
       toggleSdkBtn.addEventListener("click", function() {
         const div = document.getElementById("onetrust-pc-sdk");
         if (div) {
-          if (div.classList.contains("hidden")) {
-            div.classList.remove("hidden");
-            div.classList.remove("ot-hide");
+          if (div.style.display === "none" || div.style.display === "") {
             div.style.display = "block";
           } else {
-            div.classList.add("hidden");
-            div.classList.add("ot-hide");
             div.style.display = "none";
           }
         } else {
@@ -152,19 +148,16 @@
 
       observer.observe(document.body, { childList: true, subtree: true });
 
-      // Attach the event listener to the show-div-btn after the div is created
-      toggleSdkBtn.addEventListener("click", function() {
-        const div = document.getElementById("onetrust-pc-sdk");
-        if (div) {
-          if (div.classList.contains("hidden")) {
-            div.classList.remove("hidden");
-            div.classList.remove("ot-hide");
-            div.style.display = "block";
+      toggleIframeBtn.addEventListener("click", function() {
+        const iframe = document.querySelector("#iframe-container iframe");
+        if (iframe) {
+          if (iframe.classList.contains("hidden")) {
+            iframe.classList.remove("hidden");
           } else {
-            div.classList.add("hidden");
-            div.classList.add("ot-hide");
-            div.style.display = "none";
+            iframe.classList.add("hidden");
           }
+        } else {
+          console.error("Iframe not found.");
         }
       });
     });
